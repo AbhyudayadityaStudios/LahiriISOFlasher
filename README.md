@@ -3,7 +3,7 @@
 ![](https://img.shields.io/github/created-at/AbhyudayadityaStudios/LahiriISOFlasher?color=%23561bc5&style=for-the-badge)
 ![](https://img.shields.io/github/v/release/AbhyudayadityaStudios/LahiriISOFlasher?color=%23a9e43a&style=for-the-badge)
 ![](https://img.shields.io/github/license/AbhyudayadityaStudios/LahiriISOFlasher?color=%23A42E2B&style=for-the-badge&logo=GNU)
-![](https://img.shields.io/badge/language-Python-%233776AB?style=for-the-badge&logo=Python)
+![](https://img.shields.io/badge/language-Python-%233776AB?style=for-the-badge&logo=Python&logoColor=white)
 ![](https://img.shields.io/github/downloads/AbhyudayadityaStudios/LahiriISOFlasher/total.svg?label=Downloads&style=for-the-badge&color=%2301c45b)
 
 <img src="https://github.com/MYTAditya/LahiriISOFlasher/blob/master/ui/icon.png" alt="icon" width="360">
