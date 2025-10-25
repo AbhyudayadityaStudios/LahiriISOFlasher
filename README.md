@@ -1,10 +1,11 @@
 # Lahiri ISO Flasher
 
-![](https://img.shields.io/github/created-at/AbhyudayadityaStudios/LahiriISOFlasher?color=%2331F6E1&style=for-the-badge&logo=GitHub)
+![](https://img.shields.io/github/created-at/AbhyudayadityaStudios/LahiriISOFlasher?color=%2331F6E1&style=for-the-badge)
 ![](https://img.shields.io/github/v/release/AbhyudayadityaStudios/LahiriISOFlasher?color=%23a9e43a&style=for-the-badge)
 ![](https://img.shields.io/github/license/AbhyudayadityaStudios/LahiriISOFlasher?color=%23A42E2B&style=for-the-badge&logo=GNU)
-![](https://img.shields.io/badge/language-Python-%233776AB?style=for-the-badge&logo=Python&logoColor=white)
-![](https://img.shields.io/github/downloads/AbhyudayadityaStudios/LahiriISOFlasher/total.svg?label=Downloads&style=for-the-badge&color=%2301c45b)
+![](https://img.shields.io/github/languages/top/AbhyudayadityaStudios/LahiriISOFlasher?style=for-the-badge&logo=Python&logoColor=white&color=3776AB)
+![](https://img.shields.io/github/downloads/AbhyudayadityaStudios/LahiriISOFlasher/total?style=for-the-badge&color=01c45b)
+![](https://img.shields.io/github/stars/AbhyudayadityaStudios/LahiriISOFlasher?style=for-the-badge&logo=GitHub&color=561bc5)
 
 <img src="https://github.com/MYTAditya/LahiriISOFlasher/blob/master/ui/icon.png" alt="icon" width="360">
 
