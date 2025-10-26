@@ -16,30 +16,28 @@ An user-friendly ISO flashing application for Windows, similar to [balenaEtcher]
 
 ## Features
 
-- **Modern Dark UI**: Clean, professional interface with lime accent color
+- **Modern Dark UI with Light mode support**: Clean, professional dark interface but also supports light mode.
 - **4-Layer Workflow**: 
   1. Select USB Drive
-  2. Select ISO File
-  3. Configure Settings (Volume Name, Partition Scheme, Target System and File System)
+  2. Select Boot Method
+  3. Configure Settings (Volume Name, Partition Scheme, File System and etc.)
   4. Flash ISO
-- **ISO Validation**: Automatically validates ISO files and checks if they're bootable
-- **Auto Volume Detection**: Extracts volume name from ISO files when available
-- **Multiple Boot Options**: Support for BIOS, UEFI, and hybrid boot modes
-- **Progress Tracking**: Real-time progress updates during flashing
-- **Safety Features**: Confirmation dialogs and drive validation
+- **ISO Validation**: Automatically validates ISO files and checks if they're bootable.
+- **Auto Volume Detection**: Extracts volume name from ISO files when available.
+- **Multiple Boot Options**: Support for MS-DOS, FreeDOS, Syslinux, Grub and etc.
+- **Progress Tracking**: Real-time progress updates during flashing.
+- **Safety Features**: Confirmation dialogs and drive validation.
 
 ## Requirements
 
 - Windows 10/11
 - Python 3.8+ (for development)
-- Administrator privileges (for disk operations)
 
 ## Installation
 
-### For Users (Standalone Executable)
-1. Download the latest release from the releases page
-2. Run `LahiriISOFlasher.exe` as administrator
-3. Follow the 4-step process to flash your ISO
+### For Users
+1. Download the [latest release](https://github.com/AbhyudayadityaStudios/LahiriISOFlasher/releases).
+2. Run `LahiriISOFlasher.exe`.
 
 ### For Developers
 1. Clone the repository
@@ -59,8 +57,6 @@ To create a standalone executable:
 ```cmd
 py build.py
 ```
-
-This will create a single executable file in the `dist` folder. (It requires `icon.ico` inside a `ui` folder at the the same place to start the application.)
 
 ## Usage
 
