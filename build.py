@@ -1,59 +1,63 @@
 import os
 import subprocess
 import sys
+import shutil
+import PyInstaller
 from pathlib import Path
 
-def build_executable():
-    """Build standalone executable using PyInstaller"""
+def build():
+    # Build Lahiri ISO Flasher
     
-    # Install PyInstaller if not available
-    try:
-        import PyInstaller
-    except ImportError:
-        print("Installing PyInstaller...")
-        subprocess.check_call([sys.executable, "-m", "pip", "install", "pyinstaller"])
-    
-    # PyInstaller command with icon and version info
-    cmd = [
+    # PyInstaller command to make Windows application 
+    build_exe = [
         "pyinstaller",
         "--onefile",
         "--windowed",
         "--name=LahiriISOFlasher",
         "--add-data=ui;ui",
         "--add-data=core;core",
+        "--uac-admin",
         "--hidden-import=customtkinter",
         "--hidden-import=PIL",
         "--hidden-import=psutil",
         "--hidden-import=win32api",
         "--hidden-import=win32file",
+        "--icon=res/icon.ico",
+        "--version-file=ver_info.txt",
         "main.py"
     ]
-    
-    # Add icon if it exists
-    if os.path.exists("ui/icon.ico"):
-        cmd.insert(-1, "--icon=ui/icon.ico")
-        print("Using custom icon for executable")
-    else:
-        print("No icon file found, building without icon")
-    
-    # Add version info if it exists
-    if os.path.exists("ver_info.txt"):
-        cmd.insert(-1, "--version-file=ver_info.txt")
-        print("Using version info file")
-    else:
-        print("No version info file found, building without version info")
+
+    # Robocopy command to copy files
+    copy_files = [
+        'robocopy',
+        'res',
+        'dist\\res',
+        '/S',
+        '/A-:H',
+        '/COPY:DAT',
+        '/XF',
+        'readme.txt'
+    ]
     
     print("Building executable...")
     try:
-        subprocess.run(cmd, check=True)
+        # At first, build the executable
+        subprocess.run(build_exe, check=True)
         print("Build completed successfully!")
         print("Executable created in 'dist' folder")
-                
+        print("Copying necessary files...")
+        try:
+            # After that, copy necessary files
+            subprocess.run(copy_files, check=True)
+            print("Successfully copied!")
+            print("Now you can run Lahiri ISO Flasher!")
+        except subprocess.CalledProcessError as e:
+            print(f"Task failed: {e}")
+            return False
     except subprocess.CalledProcessError as e:
         print(f"Build failed: {e}")
         return False
-    
     return True
 
 if __name__ == "__main__":
-    build_executable()
+    build()
