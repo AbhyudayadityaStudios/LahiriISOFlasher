@@ -5,7 +5,7 @@
 ![](https://img.shields.io/github/license/AbhyudayadityaStudios/LahiriISOFlasher?color=%23A42E2B&style=for-the-badge&logo=GNU)
 ![](https://img.shields.io/github/languages/top/AbhyudayadityaStudios/LahiriISOFlasher?style=for-the-badge&logo=Python&logoColor=white&color=3776AB)
 ![](https://img.shields.io/github/downloads/AbhyudayadityaStudios/LahiriISOFlasher/total?style=for-the-badge&color=01c45b)
-![](https://img.shields.io/github/stars/AbhyudayadityaStudios/LahiriISOFlasher?style=for-the-badge&logo=GitHub&color=561bc5)
+![](https://img.shields.io/github/stars/AbhyudayadityaStudios/LahiriISOFlasher?style=for-the-badge&logo=GitHub&color=FF681A)
 
 <img src="https://github.com/MYTAditya/LahiriISOFlasher/blob/master/ui/icon.png" alt="icon" width="360">
 
