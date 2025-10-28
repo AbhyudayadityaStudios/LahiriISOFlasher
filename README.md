@@ -9,9 +9,6 @@
 
 <img src="https://github.com/MYTAditya/LahiriISOFlasher/blob/master/ui/icon.png" alt="icon" width="360">
 
-[![](https://img.youtube.com/vi/OvTpKhZJLkU/0.jpg)](https://youtu.be/OvTpKhZJLkU?si=k-NAldYZvZr8qiiC)
-
-
 An user-friendly ISO flashing application for Windows, similar to [balenaEtcher](https://github.com/balena-io/etcher) but with additional [Rufus](https://github.com/pbatard/rufus)-like features.
 
 ## Features
@@ -57,24 +54,6 @@ To create a standalone executable:
 ```cmd
 py build.py
 ```
-
-## Usage
-
-1. **Select USB Drive**: Choose your target USB drive from the dropdown
-2. **Select ISO File**: Browse and select your ISO file
-3. **Configure Settings**:
-   - Volume Name: Set the name for your USB drive
-   - Partition Scheme: Choose MBR or GPT
-   - Target System: Select BIOS, UEFI, or hybrid compatibility
-   - File System: Choose FAT32 or NTFS
-4. **Flash**: Click the flash button to start the process
-
-## Safety Features
-
-- **Drive Validation**: Only shows removable USB drives
-- **ISO Validation**: Checks for valid ISO format and bootability
-- **Confirmation Dialog**: Confirms all settings before flashing
-- **Progress Monitoring**: Shows real-time progress and status
 
 ## Disclaimer
 
