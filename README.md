@@ -25,36 +25,25 @@ An user-friendly ISO flashing application for Windows, similar to [balenaEtcher]
 - **Progress Tracking**: Real-time progress updates during flashing.
 - **Safety Features**: Confirmation dialogs and drive validation.
 
-## Requirements
-
-- Windows 10/11
-- Python 3.8+ (for development)
-
 ## Installation
-
-### For Users
 1. Download the [latest release](https://github.com/AbhyudayadityaStudios/LahiriISOFlasher/releases).
 2. Run `LahiriISOFlasher.exe`.
+(It is recommended to use Windows 10).
 
-### For Developers
-1. Clone the repository
+## Compilation
+1. Clone the repository or download the [latest source code](https://github.com/AbhyudayadityaStudios/LahiriISOFlasher/releases):
+   ```cmd
+   git clone https://github.com/AbhyudayadityaStudios/LahiriISOFlasher
+   ```
 2. Install dependencies:
    ```cmd
    py -m pip install -r requirements.txt
    ```
-3. Run the application:
+3. Run the application (optional):
    ```cmd
    py main.py
    ```
-
-## Building from Source
-
-To create a standalone executable:
-
-```cmd
-py build.py
-```
-
-## Disclaimer
-
-This software can permanently erase data on USB drives. Always ensure you have backups of important data before using this application. Use at your own risk.
+4. Create an executable:
+   ```cmd
+   py build.py
+   ```
