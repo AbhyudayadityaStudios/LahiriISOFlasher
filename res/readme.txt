@@ -1,7 +1,7 @@
 This folder contains those external files which are required for LahiriISOFlasher.
 
 It contains the icon.ico, the official icon of LahiriISOFlasher.
-In the other subfolders (i.e. Syslinux and Grub4DOS) are the folders of third-party applications which LahiriISOFlasher runs to write boot sector codes.
+In the other subfolders (e.g. Syslinux and Grub4DOS) are the folders of third-party applications which LahiriISOFlasher runs to write boot sector codes.
 
 Syslinux files from The Linux Kernel Archives.
 syslinuxv4.exe and syslinuxv6.exe files are renamed from syslinux.exe specify their versions.
