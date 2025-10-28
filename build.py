@@ -29,14 +29,14 @@ def build():
 
     # Robocopy command to copy files
     copy_files = [
-        'robocopy',
-        'res',
-        'dist\\res',
-        '/S',
-        '/A-:H',
-        '/COPY:DAT',
-        '/XF',
-        'readme.txt'
+        "robocopy",
+        "res",
+        "dist\\res",
+        "/S",
+        "/A-:H",
+        "/COPY:DAT",
+        "/XF",
+        "readme.txt"
     ]
     
     print("Building executable...")
@@ -48,13 +48,18 @@ def build():
         print("Copying necessary files...")
         try:
             # After that, copy necessary files
-            subprocess.run(copy_files, check=True)
-            print("Successfully copied!")
-            print("Now you can run Lahiri ISO Flasher!")
-        except subprocess.CalledProcessError as e:
+            copy_done = subprocess.run(copy_files, check=False)
+            # Return code greater than or equal to 8 is an error
+            if not copy_done.returncode >= 8:
+                print("Successfully copied!")
+                print("Now you can run Lahiri ISO Flasher!")
+            else:
+                print(f"Task failed: {e}")
+                return False
+        except Exception as e:
             print(f"Task failed: {e}")
             return False
-    except subprocess.CalledProcessError as e:
+    except subprocess.CalledProcessError or Exception as e:
         print(f"Build failed: {e}")
         return False
     return True
