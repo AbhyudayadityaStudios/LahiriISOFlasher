@@ -4,7 +4,7 @@ import tkinter as tk
 from tkinter import messagebox
 import customtkinter as ctk
 from pathlib import Path
-from PIL import Image, ImageTk
+from PIL import Image
 
 class AboutWindow():
     def __init__(self, parent):
