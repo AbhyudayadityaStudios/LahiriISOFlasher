@@ -7,7 +7,7 @@ import tempfile
 import shutil
 import sys
 from pathlib import Path
-from PIL import Image, ImageTk
+from PIL import Image
 
 from core.iso_handler import ISOHandler
 from core.usb_handler import USBHandler
