@@ -13,6 +13,7 @@ from ui.main_window import MainWindow
 from core.iso_handler import ISOHandler
 from core.usb_handler import USBHandler
 from core.flasher import ISOFlasher
+from ui.about_window import AboutWindow
 
 def main():
     # Set appearance mode and color theme

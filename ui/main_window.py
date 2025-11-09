@@ -153,25 +153,26 @@ class MainWindow(ctk.CTk):
         self.update_layer_states()
 
     def open_github(self):
-        # Open GitHub link
+        # Open GitHub Link
         try:
             os.startfile("https://github.com/MYTAditya")
         except Exception as e:
             messagebox.showerror("Error", f"Could not open GitHub link: {str(e)}")
 
     def open_support(self):
-        # Open Sponsor link
+        # Open Sponsor Link
         try:
             os.startfile("https://ko-fi.com/MYTAditya")
         except Exception as e:
             messagebox.showerror("Error", f"Could not open sponsor link: {str(e)}")
 
     def open_about(self):
-        # Open Sponsor link
+        # Open About Window
         try:
-            about_win = AboutWindow() 
+            parent = getattr(self, 'root', None) or getattr(self, 'master', None) or self
+            AboutWindow(parent) 
         except Exception as e:
-            messagebox.showerror("Error", f"Could not open sponsor link: {str(e)}")
+            messagebox.showerror("Error", f"Could not open about window: {str(e)}")
         
     def setup_scrollable_ui(self):
         # Outer main container (header + scrollable rest)
@@ -197,26 +198,21 @@ class MainWindow(ctk.CTk):
         header_frame = ctk.CTkFrame(parent if parent is not None else self.outer_frame, fg_color="transparent")
         header_frame.pack(fill="x", pady=(0, 30))
         
-        # Try to load and display the icon
-        try:
-            # Get the correct path for the icon
-            icon_path = self.get_resource_path("ui/icon.png")
+        # Get the correct path for the icon
+        icon_path = self.get_resource_path("ui/icon.png")
             
-            # Load and resize the icon
-            icon_image = Image.open(icon_path)
-            icon_image = icon_image.resize((100, 100), Image.Resampling.LANCZOS)
-            self.icon_photo = ctk.CTkImage(light_image=icon_image, dark_image=icon_image, size=(100, 100))
+        # Load and resize the icon
+        icon_image = Image.open(icon_path)
+        icon_image = icon_image.resize((100, 100), Image.Resampling.LANCZOS)
+        self.icon_photo = ctk.CTkImage(light_image=icon_image, dark_image=icon_image, size=(100, 100))
                 
-            # Icon label
-            icon_label = ctk.CTkLabel(
-                header_frame,
-                image=self.icon_photo,
-                text=""
-                )
-            icon_label.pack(side="left", padx=(0, 15))
-
-        except Exception as e:
-            print(f"Could not load icon: {e}")
+        # Icon label
+        icon_label = ctk.CTkLabel(
+            header_frame,
+            image=self.icon_photo,
+            text=""
+            )
+        icon_label.pack(side="left", padx=(0, 15))
         
         # Title
         title_label = ctk.CTkLabel(
@@ -485,7 +481,7 @@ class MainWindow(ctk.CTk):
         self.system_dropdown = ctk.CTkComboBox(
             right_column,
             variable=self.system_var,
-            values=["FAT32", "NTFS", "UDF", "exFAT"],
+            values=["FAT32", "NTFS", "UDF", "exFAT", "ext2", "ext3", "ext4"],
             width=200,
             state="disabled",
             font=ctk.CTkFont(family="Courier New", size=12)

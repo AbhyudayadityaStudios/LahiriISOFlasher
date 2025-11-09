@@ -1,75 +1,72 @@
 import os
+import sys
 import tkinter as tk
+from tkinter import messagebox
 import customtkinter as ctk
 from pathlib import Path
 from PIL import Image
-import tempfile
-import shutil
-import sys
-import threading
 
-class AboutWindow(tk.Tk):
-    def __init__(self, parent=None):
+class AboutWindow():
+    def __init__(self, parent):
         super().__init__()
-        # Open About window
-        about_window = tk.Toplevel(self)
-        about_window.title("About Lahiri ISO Flasher")
-        about_window.geometry("870x600")
-        about_window.resizable(False, False)
-        about_window.iconbitmap("res/icon.ico")
-        about_window.transient(self)  
-        about_window.grab_set()
+        # Configure About Window
+        self._owns_root = False
+        self.parent = parent
+        container = tk.Toplevel(parent)
+        self._about_window = container
+        container.title("About Lahiri ISO Flasher")
+        container.geometry("870x600")
+        container.resizable(False, False)
+        container.iconbitmap("res/icon.ico")
+        self._about_window.transient(self.parent)
+        self._about_window.grab_set()
 
-        # Create main frame
-        main_frame = tk.Frame(about_window)
+        # Create UI inside the container
+        main_frame = tk.Frame(container)
         main_frame.pack(fill=tk.BOTH, expand=True)
-        
-        # Fixed header with logo
+
         header_frame = tk.Frame(main_frame, bg='#a9e43a', height=150)
         header_frame.pack(fill=tk.X, side=tk.TOP)
         header_frame.pack_propagate(False)
-        icon_path = self.get_resource_path("ui\\icon.png")
+
+        # Get the correct path for the icon
+        icon_path = self.get_resource_path("ui/icon.png")
+            
+        # Load and resize the icon
         icon_image = Image.open(icon_path)
         icon_image = icon_image.resize((100, 100), Image.Resampling.LANCZOS)
         self.icon_photo = ctk.CTkImage(light_image=icon_image, dark_image=icon_image, size=(100, 100))
-        icon_label = ctk.CTkLabel(
-            header_frame,
-            image=self.icon_photo,
-            text=""
-        )
+        icon_label = ctk.CTkLabel(header_frame, image=self.icon_photo, text="")
         icon_label.pack(side="left", padx=20, pady=10)
-        
-        # Information text
+
+        # Infomations about the app
         info_text = """
 Lahiri ISO Flasher
 Version 2.0.0
 Copyright © 2025-Present Abhyudayaditya Studios
 Initially developed by Mastered YT Aditya
 """
-        
-        info_label = tk.Label(header_frame, text=info_text, font=('Arial', 10),
-                              bg='#a9e43a', justify=tk.LEFT)
+        info_label = tk.Label(header_frame, text=info_text, font=('Arial', 10), bg='#a9e43a', justify=tk.LEFT)
         info_label.pack(side=tk.LEFT, padx=20, pady=10)
-        
-        # Scrollable text area
+
         text_frame = tk.Frame(main_frame)
         text_frame.pack(fill=tk.BOTH, expand=True, side=tk.TOP)
-        scrollbar = tk.Scrollbar(text_frame)
-        scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
-        text_widget = tk.Text(text_frame, wrap=tk.NONE,
-                              yscrollcommand=scrollbar.set,
-                              font=('Courier', 10),
-                              bg='white', fg='black',
-                              padx=10, pady=10)
+
+        text_widget = tk.Text(text_frame, wrap=tk.NONE, font=('Courier', 10), bg='white', fg='black', padx=10, pady=10)
         text_widget.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
-        scrollbar.config(command=text_widget.yview)
+
+        scrollbar = tk.Scrollbar(text_frame, command=text_widget.yview)
+        scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+        text_widget.configure(yscrollcommand=scrollbar.set)
+
+        # Copyrights of third-party projects
         licenses_text = """
 FreeDOS support from the FreeDOS project:
-https://www.freedos.org/
+https://www.freedos.org
 GNU General Public License (GPL) v2 or later, with binary redistribution allowed
 
 Syslinux support from Syslinux by H. Peter Anvin et al.:
-https://syslinux.org/
+https://syslinux.org
 GNU General Public License (GPL) v2 or later
 
 Grub4DOS support from Grub4DOS by chenall, itself based on GRUB Legacy by the Free Software Foundation:
@@ -81,17 +78,25 @@ https://www.gnu.org/software/grub
 GNU General Public License (GPL) v3 or later
 
 ReactOS support by ReactOS:
-https://www.reactos.org/
+https://www.reactos.org
 GNU General Public License (GPL) v2 or later
 """
         text_widget.insert(tk.END, licenses_text)
         text_widget.configure(state="disabled")
-        
-        # Add buttons at bottom
-        ok_btn = tk.Button(about_window, text="OK", command=about_window.destroy)
-        ok_btn.pack(side="right", padx=(0, 100))
-        license_btn = tk.Button(about_window, text="License", command=self.license_window)
+
+        btn_frame = tk.Frame(main_frame)
+        btn_frame.pack(fill=tk.X, side=tk.BOTTOM, pady=10)
+
+        license_btn = tk.Button(btn_frame, text="License", command=self.license_window)
         license_btn.pack(side="left", padx=(100, 0))
+
+        ok_btn = tk.Button(btn_frame, text="OK", command=self._close_container)
+        ok_btn.pack(side="right", padx=(0, 100))
+
+        # Bring the window to front and focus
+        container.lift()
+        container.focus_force()
+
     def get_resource_path(self, relative_path):
         # Get absolute path to resource, works for dev and for PyInstaller
         try:
@@ -101,19 +106,20 @@ GNU General Public License (GPL) v2 or later
             base_path = os.path.abspath(".")
 
         return os.path.join(base_path, relative_path)
-    
+
     def license_window(self):
-        # Open license window (GNU GPLv3 license text)
-        license_window = tk.Toplevel(self)
-        license_window.title("Lahiri ISO Flasher License")
-        license_window.geometry("620x600")
-        license_window.resizable(False, False)
-        license_window.iconbitmap("res/icon.ico")
-        license_window.transient(self)  
-        license_window.grab_set()
+        # Configure License Window
+        parent_win = self._about_window
+        license_win = tk.Toplevel(parent_win)
+        license_win.title("Lahiri ISO Flasher License")
+        license_win.geometry("620x600")
+        license_win.resizable(False, False)
+        license_win.transient(parent_win)
+        license_win.grab_set()
+        license_win.iconbitmap("res/icon.ico")
 
         # Scrollable text area
-        text_frame = tk.Frame(license_window)
+        text_frame = tk.Frame(license_win)
         text_frame.pack(fill=tk.BOTH, expand=True, side=tk.TOP)
         scrollbar = tk.Scrollbar(text_frame)
         scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
@@ -124,6 +130,8 @@ GNU General Public License (GPL) v2 or later
                               padx=10, pady=10)
         text_widget.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
         scrollbar.config(command=text_widget.yview)
+
+        # A copy of GNU GPLv3    
         gpl3_text = """
                     GNU GENERAL PUBLIC LICENSE
                        Version 3, 29 June 2007
@@ -802,7 +810,14 @@ Public License instead of this License.  But first, please read
 """
         text_widget.insert(tk.END, gpl3_text)
         text_widget.configure(state="disabled")
-        
-        # Add button at bottom
-        close_btn = tk.Button(license_window, text="Close", command=license_window.destroy)
+
+        close_btn = tk.Button(license_win, text="Close", command=license_win.destroy)
         close_btn.pack(pady=10)
+
+        # Bring the window to front and focus
+        license_win.lift()
+        license_win.focus_force()
+
+    def _close_container(self):
+        self._about_window.grab_release()
+        self._about_window.destroy()
