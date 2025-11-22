@@ -9,7 +9,7 @@
 
 <img src="https://github.com/MYTAditya/LahiriISOFlasher/blob/master/ui/icon.png" alt="icon" width="360">
 
-An user-friendly ISO flashing application for Windows, similar to [balenaEtcher](https://github.com/balena-io/etcher) but with additional [Rufus](https://github.com/pbatard/rufus)-like features.
+An ISO to USB flashing tool
 
 ## Features
 
@@ -28,7 +28,7 @@ An user-friendly ISO flashing application for Windows, similar to [balenaEtcher]
 ## Installation
 1. Download the [latest release](https://github.com/AbhyudayadityaStudios/LahiriISOFlasher/releases).
 2. Run `LahiriISOFlasher.exe`.
-(It is recommended to use Windows 10).
+(It is recommended to use Windows 10 22H2 and later).
 
 ## Compilation
 1. Clone the repository or download the [latest source code](https://github.com/AbhyudayadityaStudios/LahiriISOFlasher/releases):
@@ -47,3 +47,4 @@ An user-friendly ISO flashing application for Windows, similar to [balenaEtcher]
    ```cmd
    py build.py
    ```
+(It is recommended to use Python 3.13.2 or later).
