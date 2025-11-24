@@ -1,13 +1,32 @@
-This folder contains those external files which are required for LahiriISOFlasher.
+This folder contains third-party files in subfolders.
 
-It contains the icon.ico, the official icon of LahiriISOFlasher.
-In the other subfolders (e.g. Syslinux and Grub4DOS) are the folders of third-party applications which LahiriISOFlasher runs to write boot sector codes.
+* The 'boot' folder contains bootcodes and 'UEFI-NTFS.img' used by Rufus.
+  After bootable pendrive creation using Rufus, the binary files were extracted using
+  Cygwin with Administrative Privileges:
+      dd if=/dev/sdb of=bootcodes.bin bs=512 count=1
+  And 'UEFI-NTFS.img' from: 
+      https://github.com/pbatard/rufus
+      at '/res/uefi/uefi-ntfs.img'
 
-Syslinux files from The Linux Kernel Archives.
-syslinuxv4.exe and syslinuxv6.exe files are renamed from syslinux.exe specify their versions.
-syslinux.exe (version 4.07) from <https://www.kernel.org/pub/linux/utils/boot/syslinux/syslinux-4.07.zip> in [/win32/] directory.
-syslinux.exe (version 6.04) from <https://www.kernel.org/pub/linux/utils/boot/syslinux/Testing/6.04/syslinux-6.04-pre1.zip> in [/bios/win32/] directory.
+* The 'cygwin' folder contains files from Cygwin to use 'dd' and 'mke2fs' commands on
+  Windows. Here's a list of the files, the packages it belongs to and the official 
+  projects:
+    +--------------------+----------------------+---------------------+
+    | File Name          | Package Name         | Project Name        |
+    +--------------------+----------------------+---------------------+
+    | cygblkid-1.dll     | libblkid1-2.40.2-2   | E2fsprogs           |
+    | cygcom_err-2.dll   | libcom_err2-1.44.5-1 | E2fsprogs           |
+    | cyge2p-2.dll       | libe2p2-1.44.5-1     | E2fsprogs           |
+    | cygext2fs-2.dll    | libext2fs2-1.44.5-1  | E2fsprogs           |
+    | cyggcc_s-seh-1.dll | libgcc1-13.4.0-1     | GCC Runtime Library |
+    | cygiconv-2.dll     | libiconv2-1.17-1     | GCC Runtime Library |
+    | cygintl-8.dll      | libintl8-0.22.5-1    | GNU gettext         |
+    | cyguuid-1.dlll     | libuuid1-2.40.2-2    | E2fsprogs           |
+    | cygwin1.dll        | cygwin-3.6.5-1       | Cygwin              |
+    | dd.exe             | coreutils-9.0-1      | GNU Core Utilities  |
+    | mke2fs.exe         | e2fsprogs-1.44.5-1   | E2fsprogs           |
+    +--------------------+----------------------+---------------------+
 
-Grub4DOS files are from SourceForge and GitHub.
-grubinst.exe from <https://sourceforge.net/projects/grub4dos/files/grubinst/grubinst%201.0.1/grubinst_1.0.1_bin_win.zip/download> in root directory.
-grldr from <https://github.com/chenall/grub4dos/releases/tag/2020-08-09-0da21fe> in root directory.
+* The 'additional' folder contains files which are placed by Rufus after creation of
+  MS-DOS, FreeDOS, Syslinux 4.07, Syslinux 6.04 and Grub4DOS 0.4.6a. E.g. grldr, 
+  COMMAND.COM, KERNEL.SYS, IO.SYS and etc.
