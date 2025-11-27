@@ -2,8 +2,8 @@ This folder contains third-party files in subfolders.
 
 * The 'boot' folder contains bootcodes and 'UEFI-NTFS.img' used by Rufus.
   After bootable pendrive creation using Rufus, the binary files were extracted using
-  Cygwin with Administrative Privileges:
-      dd if=/dev/sdb of=bootcodes.bin bs=512 count=1
+  this command in Cygwin with Administrative Privileges and then renamed:
+      dd if='\\.\PHYSICALDRIVE1' of=/usr/bootcode.bin bs=512 count=1
   And 'UEFI-NTFS.img' from: 
       https://github.com/pbatard/rufus
       at '/res/uefi/uefi-ntfs.img'
