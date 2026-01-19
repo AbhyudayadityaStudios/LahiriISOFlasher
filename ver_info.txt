@@ -18,6 +18,7 @@
  # along with this program; if not, see <http://www.gnu.org/licenses/>.
  #
  ##
+
 # Original code from TurboWarp Packager Extras by Thomas Weber
 # Template was generated from an Electron EXE and pyi-grab_version
 #
