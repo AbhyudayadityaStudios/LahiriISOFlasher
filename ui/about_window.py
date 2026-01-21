@@ -96,7 +96,7 @@ DD support from GNU Core Utilities by Free Software Foundation, Inc.:
 https://www.gnu.org/software/coreutils
 GNU General Public License (GPL) v3 or later
 
-MKE2FS, BLKID, E2P, EXT2FS, COM_ERR & UUID support from E2fsprogs by Theodore Ts'o, Andreas Dilger & MIT Student Information Processing Board:
+MKE2FS, BLKID, E2P, EXT2FS, COM_ERR & UUID support from E2fsprogs by Theodore Ts'o and contributors:
 https://e2fsprogs.sourceforge.net
 GNU General Public License (GPL) v2 only for MKE2FS
 GNU Lesser General Public License (LGPL) v2.1 only for BLKID
