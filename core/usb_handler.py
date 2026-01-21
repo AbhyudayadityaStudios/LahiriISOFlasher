@@ -1,6 +1,6 @@
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
- ' usb_handler.py
- '
+ ' Lahiri ISO Flasher: An ISO to USB Flashing Tool
+ ' USB Drive handling and listing code
  ' Copyright (c) 2025, 2026 Abhyudayaditya Studios
  '
  ' This program is free software; you can redistribute it and/or
