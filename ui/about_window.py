@@ -92,6 +92,10 @@ Cygwin API Library support from Cygwin by Red Hat, Inc.:
 https://cygwin.com
 GNU Lesser General Public License (LGPL) v3 or later, with Cygwin Linking Exception
 
+Oracle JDK 24 support by Oracle Corporation:
+https://www.oracle.com/java/technologies
+Oracle No-Fee Terms and Conditions License
+
 DD support from GNU Core Utilities by Free Software Foundation, Inc.:
 https://www.gnu.org/software/coreutils
 GNU General Public License (GPL) v3 or later
