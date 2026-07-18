@@ -1,114 +1,140 @@
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+ ' Lahiri ISO Flasher: An ISO to USB Flashing Tool
+ ' USB Drive handling and listing code
+ ' Copyright (c) 2025, 2026 Abhyudayaditya Studios
+ '
+ ' This program is free software; you can redistribute it and/or
+ ' modify it under the terms of the GNU General Public License as
+ ' published by the Free Software Foundation; either version 3 of the
+ ' License, or (at your option) any later version.
+ ' 
+ ' This program is distributed in the hope that it will be useful, but
+ ' WITHOUT ANY WARRANTY; without even the implied warranty of
+ ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ ' General Public License for more details.
+ ' 
+ ' You should have received a copy of the GNU General Public License
+ ' along with this program; if not, see <http://www.gnu.org/licenses/>.
+ '
+ '''
+
+''' Written by Mastered YT Aditya. '''
+ 
 import os
 import subprocess
 import psutil
 import win32api
 import win32file
+from typing import List, Dict, Optional, Tuple
+
+def run_cmd(cmd: List[str], capture_output: bool = True, check: bool = False) -> Tuple[int, str, str]:
+    # Run commands to get a list
+    proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+    out, err = proc.communicate()
+    if check and proc.returncode != 0:
+        raise subprocess.CalledProcessError(proc.returncode, cmd, output=out, stderr=err)
+    return proc.returncode, out.strip(), err.strip()
 
 class USBHandler:
     def __init__(self):
         pass
         
-    def get_usb_drives(self):
-        """Get list of USB drives"""
-        usb_drives = []
-        
+    def list_physical_disks() -> List[Tuple[int, str]]:
+        # List physical disks
+        ps_cmd = [
+            "powershell",
+            "-NoProfile",
+            "-Command",
+            r"Get-CimInstance -ClassName Win32_DiskDrive | Where-Object {$_.DeviceID -notlike '\\.\PHYSICALDRIVE0'} | Select-Object -Property Index, Model | ConvertTo-Json -Depth 1"
+        ]
+        # \\.\PHYSICALDRIVE0 is the physical disk is used by the OS
+        rc, out, err = run_cmd(ps_cmd)
+        if rc != 0 or not out:
+            # Fallback empty list on failure
+            return []
+
         try:
-            # Get all disk partitions
-            partitions = psutil.disk_partitions()
-            
-            for partition in partitions:
-                try:
-                    # Check if it's a removable drive
-                    drive_type = win32file.GetDriveType(partition.mountpoint)
-                    
-                    # DRIVE_REMOVABLE = 2
-                    if drive_type == 2:
-                        # Get drive info
-                        usage = psutil.disk_usage(partition.mountpoint)
-                        
-                        # Get volume label
-                        try:
-                            volume_info = win32api.GetVolumeInformation(partition.mountpoint)
-                            label = volume_info[0] if volume_info[0] else "Removable Drive"
-                        except:
-                            label = "Removable Drive"
-                            
-                        # Format size
-                        size_gb = usage.total / (1024**3)
-                        size_str = f"{size_gb:.1f} GB"
-                        
-                        usb_drives.append({
-                            'letter': partition.mountpoint[0],
-                            'label': label,
-                            'size': size_str,
-                            'total_bytes': usage.total,
-                            'free_bytes': usage.free,
-                            'device': partition.device
-                        })
-                        
-                except Exception as e:
-                    continue
-                    
-        except Exception as e:
-            print(f"Error getting USB drives: {e}")
-            
-        return usb_drives
-        
-    def format_drive(self, drive_letter, volume_name, file_system="FAT32"):
-        """Format USB drive"""
-        try:
-            # Use Windows format command
-            cmd = f'format {drive_letter}: /FS:{file_system} /V:"{volume_name}" /Q /Y'
-            
-            result = subprocess.run(
-                cmd,
-                shell=True,
-                capture_output=True,
-                text=True,
-                timeout=300
-            )
-            
-            return result.returncode == 0
-            
-        except Exception as e:
-            print(f"Error formatting drive: {e}")
-            return False
-            
-    def is_drive_mounted(self, drive_letter):
-        """Check if drive is mounted"""
-        try:
-            return os.path.exists(f"{drive_letter}:\\")
-        except:
-            return False
-            
-    def get_drive_info(self, drive_letter):
-        """Get detailed drive information"""
-        try:
-            drive_path = f"{drive_letter}:\\"
-            
-            if not os.path.exists(drive_path):
-                return None
-                
-            usage = psutil.disk_usage(drive_path)
-            
-            # Get volume label
-            try:
-                volume_info = win32api.GetVolumeInformation(drive_path)
-                label = volume_info[0] if volume_info[0] else "Removable Drive"
-                file_system = volume_info[4]
-            except:
-                label = "Removable Drive"
-                file_system = "Unknown"
-                
-            return {
-                'letter': drive_letter,
-                'label': label,
-                'file_system': file_system,
-                'total_bytes': usage.total,
-                'free_bytes': usage.free,
-                'used_bytes': usage.used
-            }
-            
-        except Exception as e:
-            print(f"Error getting drive info: {e}")
+            import json
+            data = json.loads(out)
+        except Exception:
+            return []
+
+        disks = []
+        if isinstance(data, dict):
+            idx = int(data.get("Index", data.get("index", 0)))
+            model = (data.get("Model", "") or "").strip()
+            disks.append((idx, model or f"Disk {idx}"))
+        elif isinstance(data, list):
+            for item in data:
+                idx = int(item.get("Index", item.get("index", 0)))
+                model = (item.get("Model", "") or "").strip()
+                disks.append((idx, model or f"Disk {idx}"))
+        disks.sort(key=lambda x: x[0])
+        return disks
+
+    def get_disk_display_list(self) -> List[str]:
+        # List physical disks in a good form
+        return [f"Disk {idx} - {name}" for idx, name in USBHandler.list_physical_disks()]
+
+    def get_disk_size(display_string: str) -> Optional[str]:
+        # Returns the disk size in bytes
+        disk_number = USBHandler.parse_selected_disk(display_string)
+        if disk_number is None:
             return None
+        
+        ps_cmd = [
+            "powershell",
+            "-NoProfile",
+            "-Command",
+            f"Get-Disk -Number {disk_number} | Select-Object -Property Size"
+        ]
+        disk_size = subprocess.run(ps_cmd, check=False)
+        return disk_size
+
+    def get_partition_letter(display_string: str) -> Optional[str]:
+        # Returns primary partition letter 
+        disk_number = USBHandler.parse_selected_disk(display_string)
+        if disk_number is None:
+            return None
+        
+        ps_cmd = [
+            "powershell",
+            "-NoProfile",
+            "-Command",
+            f"Get-Disk -Number {disk_number} | Get-Partition | Get-Volume | Select-Object -Property DriveLetter | ConvertTo-Json -Depth 2"
+        ]
+        rc, out, err = run_cmd(ps_cmd)
+        if rc != 0 or not out:
+            return None
+
+        try:
+            data = json.loads(out)
+        except Exception:
+            return None
+
+        # Data can be single or list
+        candidates = []
+        if isinstance(data, dict):
+            candidates.append(data.get("DriveLetter"))
+        elif isinstance(data, list):
+            for item in data:
+                candidates.append(item.get("DriveLetter"))
+
+        # Return the first partition letter as uppercase single character
+        for d in candidates:
+            if d and isinstance(d, str) and len(d) > 0:
+                return d.strip().upper()
+
+        return None
+    
+    def parse_selected_disk(display_string: str) -> Optional[int]:
+        # Returns the disk number from a string shown in USB drive selection
+        if not display_string:
+            return None
+        parts = display_string.split()
+        if len(parts) >= 2 and parts[0].lower() == "disk":
+            try:
+                return int(parts[1])
+            except ValueError:
+                return None
+        return None
