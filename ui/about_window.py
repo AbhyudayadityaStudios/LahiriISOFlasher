@@ -1,3 +1,25 @@
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+ ' Lahiri ISO Flasher: An ISO to USB Flashing Tool
+ ' About Window of licenses and details
+ ' Copyright (c) 2026 Abhyudayaditya Studios
+ '
+ ' This program is free software; you can redistribute it and/or
+ ' modify it under the terms of the GNU General Public License as
+ ' published by the Free Software Foundation; either version 3 of the
+ ' License, or (at your option) any later version.
+ ' 
+ ' This program is distributed in the hope that it will be useful, but
+ ' WITHOUT ANY WARRANTY; without even the implied warranty of
+ ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ ' General Public License for more details.
+ ' 
+ ' You should have received a copy of the GNU General Public License
+ ' along with this program; if not, see <http://www.gnu.org/licenses/>.
+ '
+ '''
+
+''' Written by Mastered YT Aditya. '''
+
 import os
 import sys
 import tkinter as tk
@@ -9,6 +31,7 @@ from PIL import Image
 class AboutWindow():
     def __init__(self, parent):
         super().__init__()
+
         # Configure About Window
         self._owns_root = False
         self.parent = parent
@@ -17,7 +40,7 @@ class AboutWindow():
         container.title("About Lahiri ISO Flasher")
         container.geometry("870x600")
         container.resizable(False, False)
-        container.iconbitmap("res/icon.ico")
+        container.iconbitmap(self.flasher.get_resource_path("ui/icon.ico"))
         self._about_window.transient(self.parent)
         self._about_window.grab_set()
 
@@ -30,7 +53,7 @@ class AboutWindow():
         header_frame.pack_propagate(False)
 
         # Get the correct path for the icon
-        icon_path = self.get_resource_path("ui/icon.png")
+        icon_path = self.flasher.get_resource_path("ui/icon.png")
             
         # Load and resize the icon
         icon_image = Image.open(icon_path)
@@ -61,6 +84,42 @@ Initially developed by Mastered YT Aditya
 
         # Copyrights of third-party projects
         licenses_text = """
+Bootcodes and UEFI-NTFS support from Rufus by Pete Batard:
+https://rufus.ie
+GNU General Public License (GPL) v3 or later
+
+Cygwin API Library support from Cygwin by Red Hat, Inc.:
+https://cygwin.com
+GNU Lesser General Public License (LGPL) v3 or later, with Cygwin Linking Exception
+
+Oracle JDK 24 support by Oracle Corporation:
+https://www.oracle.com/java/technologies
+Oracle No-Fee Terms and Conditions License
+
+DD support from GNU Core Utilities by Free Software Foundation, Inc.:
+https://www.gnu.org/software/coreutils
+GNU General Public License (GPL) v3 or later
+
+MKE2FS, BLKID, E2P, EXT2FS, COM_ERR & UUID support from E2fsprogs by Theodore Ts'o and contributors:
+https://e2fsprogs.sourceforge.net
+GNU General Public License (GPL) v2 only for MKE2FS
+GNU Lesser General Public License (LGPL) v2.1 only for BLKID
+GNU Library General Public License (LGPL) v2 only for E2P & EXT2FS
+MIT-Style License for COM_ERR
+BSD-Style License for UUID
+
+GNU gettext support by Free Software Foundation, Inc.:
+https://www.gnu.org/software/gettext
+GNU Lesser General Public License (LGPL) v2.1 or later
+
+GCC Runtime Library support by Free Software Foundation, Inc.:
+https://gcc.gnu.org
+GNU General Public License (GPL) v3 or later, with GCC Runtime Library Exception
+
+Version Info configuration support from TurboWarp Packager Extras by Thomas Weber
+https://github.com/TurboWarp/packager-extras
+GNU General Public License (GPL) v3 only
+
 FreeDOS support from the FreeDOS project:
 https://www.freedos.org
 GNU General Public License (GPL) v2 or later, with binary redistribution allowed
@@ -96,16 +155,6 @@ GNU General Public License (GPL) v2 or later
         # Bring the window to front and focus
         container.lift()
         container.focus_force()
-
-    def get_resource_path(self, relative_path):
-        # Get absolute path to resource, works for dev and for PyInstaller
-        try:
-            # PyInstaller creates a temp folder and stores path in _MEIPASS
-            base_path = sys._MEIPASS
-        except Exception:
-            base_path = os.path.abspath(".")
-
-        return os.path.join(base_path, relative_path)
 
     def license_window(self):
         # Configure License Window
