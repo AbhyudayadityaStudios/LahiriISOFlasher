@@ -1,5 +1,8 @@
 # Lahiri ISO Flasher
 
+> [!CAUTION]
+> We're working on Lahiri ISO Flasher v2. We highly recommend you not to build binary executables directly from this repository. Please go to [releases](https://github.com/AbhyudayadityaStudios/LahiriISOFlasher/releases) to download executables.
+
 ![](https://img.shields.io/github/created-at/AbhyudayadityaStudios/LahiriISOFlasher?color=%2331F6E1&style=for-the-badge&logo=GitHub)
 ![](https://img.shields.io/github/v/release/AbhyudayadityaStudios/LahiriISOFlasher?color=%23a9e43a&style=for-the-badge&logo=GitHub)
 ![](https://img.shields.io/github/license/AbhyudayadityaStudios/LahiriISOFlasher?color=%23A42E2B&style=for-the-badge&logo=GNU)
